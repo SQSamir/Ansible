@@ -23,11 +23,9 @@ for line in lines:
    print(hostname)
    try:
        client.connect(hostname, port=port, username=username, password=password)      
-       stdin, stdout, stderr = client.exec_command(useradd)
-       for files in stdout.readlines():
-          print(files)
+       client.exec_command(useradd)
        client.exec_command(addsudoers)
-       addsshkey="sshpass -p {new}123 ssh-copy-id  {new}@{hostname}".format(new=newuser,hostname=hostname)
+       addsshkey="sshpass -p {new}123 ssh-copy-id  {new}@{hostname} &>/dev/null".format(new=newuser,hostname=hostname)
        os.system(addsshkey)
 
    except paramiko.AuthenticationException:
